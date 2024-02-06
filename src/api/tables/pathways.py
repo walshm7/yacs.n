@@ -1,5 +1,5 @@
-from sqlalchemy import Column, ForeignKey
-from sqlalchemy.dialects.postgresql import VARCHAR, TEXT, TSVECTOR
+from sqlalchemy import Column
+from sqlalchemy.dialects.postgresql import TEXT, INTEGER, VARCHAR, DATE, TSVECTOR
 
 from .database import Base
 
