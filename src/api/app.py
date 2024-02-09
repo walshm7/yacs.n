@@ -17,6 +17,7 @@ import db.semester_date_mapping as DateMapping
 import db.admin as AdminInfo
 import db.student_course_selection as CourseSelect
 import db.user as UserModel
+import db.pathwaysv2 as PathwaysV2
 import controller.user as user_controller
 import controller.session as session_controller
 import controller.userevent as event_controller
@@ -48,6 +49,7 @@ admin_info = AdminInfo.Admin(db_conn)
 course_select = CourseSelect.student_course_selection(db_conn)
 semester_info = SemesterInfo.semester_info(db_conn)
 professor_info = All_professors.Professor(db_conn, FastAPICache)
+pathwayv2 = PathwaysV2.Pathways(db_conn)
 users = UserModel.User()
 
 def is_admin_user(session):
@@ -382,3 +384,37 @@ async def remove_professor(email:str):
     print(email)
     professor, error = professor_info.remove_professor(email)
     return professor if not error else Response(str(error), status_code=500)
+
+
+@app.post('/api/bulkPathwayUpload')
+async def bulkPathwayUpload(
+        isPubliclyVisible: str = Form(...),
+        file: UploadFile = File(...)):
+    # Check to make sure the user has sent a file
+    if not file:
+        return Response("No file received", 400)
+
+    # Check that we receive a JSON file
+    if file.filename.find('.') == -1 or file.filename.rsplit('.', 1)[1].lower() != 'json':
+        return Response("File must have JSON extension", 400)
+
+    # Get file contents
+    contents = await file.read()
+
+    # Load JSON data
+    try:
+        # convert string to python dict
+        json_data = json.loads(contents.decode('utf-8'))
+        # print(json_data)
+    except json.JSONDecodeError as e:
+        return Response(f"Invalid JSON data: {str(e)}", 400)
+
+    # Call populate_from_json method
+    isSuccess, error = pathwayv2.add_bulk_pathways()
+    if isSuccess:
+        print("SUCCESS")
+        return Response(status_code=200)
+    else:
+        print("NOT WORKING")
+        print(error)
+        return Response(error.__str__(), status_code=500)
