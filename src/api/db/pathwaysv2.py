@@ -32,7 +32,7 @@ class Pathways:
                             # Insert pathways and corresponding category into "pathway" table (tables/pathways.py)
                             transaction.execute(
                                 """
-                                INSERT INTO pathway (
+                                INSERT INTO pathways (
                                     pathway,
                                     catagory,
                                     course,

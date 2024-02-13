@@ -35,6 +35,13 @@
     >
       Import Professors via JSON
     </a>
+    <a
+      v-b-modal.addPathwayDatabase
+      class="text-primary d-block"
+      style="cursor: pointer;"
+    >
+      Add Pathway Database
+    </a>
     <b-modal id="csvModal" title="Import Courses via CSV" size="xl">
       <UploadCsv />
     </b-modal>
@@ -49,6 +56,9 @@
     </b-modal>
     <b-modal id="jsonModal" title="Import Professors via JSON" size="xl">
       <UploadJson />
+    </b-modal>
+    <b-modal id="addPathwayDatabase" title="Add Pathway Database" size="xl">
+      <AddPathways />
     </b-modal>
 
     <!-- Footer of Admin Panel -->
@@ -66,10 +76,12 @@ import EditSemesters from "@/pages/EditSemesters";
 import SetDefault from "@/pages/SetDefault";
 import EditProfessors from "@/pages/EditProfessors";
 import UploadJson from "@/pages/UploadJson.vue";
+import AddPathways from "@/pages/AddPathways.vue";
 
 export default {
   name: "AdminPage",
   components: {
+    AddPathways,
     UploadCsv,
     EditSemesters,
     SetDefault,
