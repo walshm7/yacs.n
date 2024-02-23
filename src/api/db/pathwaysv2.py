@@ -27,49 +27,62 @@ class Pathways:
                 # Iterate over each entry in the JSON data
                 for entry in json_data:
                     for sub in entry['Pathways']:
-                        # print(sub)
+                        if 'Compatible minor(s)' in sub:
+                            #print(sub['Compatible minor(s)'])
+                            minor = sub['Compatible minor(s)'][0]
+                        else:
+                            minor = ' '
                         for desc in sub:
+
                             if desc != 'Name' and desc != 'Compatible minor(s)':
                                 for cor in sub[desc]:
-                                    print(cor)
-                                # print(desc)
-                                try:
-                                    # Insert pathways and corresponding category into "pathway" table (tables/pathways.py)
-                                    transaction.execute(
-                                        """
-                                        INSERT INTO pathways (
-                                            pathway,
-                                            catagory,
-                                            course,
-                                            course_name,
-                                            description,
-                                            compatible_minor
-                                        ) 
-                                        VALUES (
-                                            NULLIF(%(pathway)s, ''),
-                                            NULLIF(%(catagory)s, ''),
-                                            NULLIF(%(course)s, ''),
-                                            NULLIF(%(course_name)s, ''),
-                                            NULLIF(%(description)s, ''),
-                                            NULLIF(%(compatible_minor)s, '')  
-                                        )
-                                        ON CONFLICT DO NOTHING;
-                                        """,
-                                        {
-                                            "pathway": sub['Name'][0],
-                                            "catagory": entry['Category Name'][0],
-                                            "course": " ",
-                                            "course_name": " ",
-                                            "description": desc,
-                                            "compatible_minor": " "
+                                    #cor = cor.split('-')
+                                    #print(cor.split('-'))
+                                    if len(cor.split('-')) > 1:
+                                        cor2 = cor.split('-')[1]
+                                        cor1 = cor.split('-')[0]
+                                    else:
+                                        cor2 = ' '
+                                        cor1 = cor.split('-')[0]
 
-                                        }
-                                    )
-                                except Exception as e:
-                                    # Roll back the transaction and return the exception if an error occurs
-                                    print("THIS IS THE EXCEPTION:", e)
-                                    conn.rollback()
-                                    return (False, e)
+                                # print(desc)
+                                    try:
+                                        # Insert pathways and corresponding category into "pathway" table (tables/pathways.py)
+                                        transaction.execute(
+                                            """
+                                            INSERT INTO pathways (
+                                                pathway,
+                                                catagory,
+                                                course,
+                                                course_name,
+                                                description,
+                                                compatible_minor
+                                            ) 
+                                            VALUES (
+                                                NULLIF(%(pathway)s, ''),
+                                                NULLIF(%(catagory)s, ''),
+                                                NULLIF(%(course)s, ''),
+                                                NULLIF(%(course_name)s, ''),
+                                                NULLIF(%(description)s, ''),
+                                                NULLIF(%(compatible_minor)s, '')  
+                                            )
+                                            ON CONFLICT DO NOTHING;
+                                            """,
+                                            {
+                                                "pathway": sub['Name'][0],
+                                                "catagory": entry['Category Name'][0],
+                                                "course": cor1,
+                                                "course_name": cor2,
+                                                "description": desc,
+                                                "compatible_minor": minor
+
+                                            }
+                                        )
+                                    except Exception as e:
+                                        # Roll back the transaction and return the exception if an error occurs
+                                        print("THIS IS THE EXCEPTION:", e)
+                                        conn.rollback()
+                                        return (False, e)
             except ValueError as ve:
                 # Return an error message if the JSON data is invalid
                 return (False, f"Invalid JSON data: {str(ve)}")
