@@ -34,16 +34,25 @@ class Pathways:
                             minor = ' '
                         for desc in sub:
 
-                            if desc != 'Name' and desc != 'Compatible minor(s)':
+                            if desc != 'Name' and (desc != 'Compatible minor(s)' and 'Compatible minor(s)' not in desc):
                                 for cor in sub[desc]:
                                     #cor = cor.split('-')
                                     #print(cor.split('-'))
                                     if len(cor.split('-')) > 1:
                                         cor2 = cor.split('-')[1]
                                         cor1 = cor.split('-')[0]
+                                    elif len(cor.split('–')) > 1:
+                                        cor2 = cor.split('–')[1]
+                                        cor1 = cor.split('–')[0]
+                                    elif len(cor.split(' ',2)) >2:
+                                        split = cor.split(' ',2)
+                                        cor2 = split[2]
+                                        cor1 = split[0] + ' ' + split[1]
+                                        #print(cor1)
                                     else:
                                         cor2 = ' '
                                         cor1 = cor.split('-')[0]
+                                        #print(cor1)
 
                                 # print(desc)
                                     try:
