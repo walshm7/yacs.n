@@ -31,7 +31,7 @@ class Pathways:
                             #print(sub['Compatible minor(s)'])
                             minor = sub['Compatible minor(s)'][0]
                         else:
-                            minor = ' '
+                            minor = None
                         for desc in sub:
 
                             if desc != 'Name' and (desc != 'Compatible minor(s)' and 'Compatible minor(s)' not in desc):
@@ -50,7 +50,7 @@ class Pathways:
                                         cor1 = split[0] + ' ' + split[1]
                                         #print(cor1)
                                     else:
-                                        cor2 = ' '
+                                        cor2 = None
                                         cor1 = cor.split('-')[0]
                                         #print(cor1)
 
