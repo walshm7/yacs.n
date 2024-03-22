@@ -105,6 +105,67 @@ class Pathways:
             # Return success status and no error
             return True, None
 
+
+    # all pathways
+    def get_all_pathways(self):
+        return self.db_conn.execute(""" 
+                            SELECT DISTINCT pathway FROM pathways
+                    """, None, True)
+    # list all catagorys
+    def get_all_catagorys(self):
+        return self.db_conn.execute(""" 
+                            SELECT DISTINCT catagory FROM pathways
+                    """, None, True)
+    #gets pathway by catagory
+    def get_pathways_by_catagory(self, catagory):
+        if catagory not None:
+            sql = """
+                        SELECT
+                            *
+                        FROM
+                            pathways
+                        WHERE
+                            catagory = '%s'
+                        """
+            return self.db_conn.execute(sql, (catagory,), True)
+
+    # gets courses by pathway
+    def get_courses_by_pathway(self, pathway):
+        if pathway not None:
+            sql = """
+                SELECT
+                    course
+                FROM
+                    pathways
+                WHERE
+                    pathway = '%s'
+            """
+        return self.db_conn.execute(sql, (pathway,), True)
+
+    #get minor by pathway
+    def get_compatable_minor_by_pathway(self, pathway):
+        if pathway not None:
+            sql = """
+                SELECT 
+                    compatible_minor
+                FROM 
+                    pathways
+                WHERE
+                    pathway = '%s'
+            """
+        return self.db_conn.execute(sql, (pathway,), True)
+
+    def get_course_info_by_course(self, course):
+        if pathway not None:
+            sql = """
+                SELECT 
+                    course_name, description
+                FROM 
+                    pathways
+                WHERE
+                    course = '%s'
+            """
+        return self.db_conn.execute(sql, (course,), True)
     def clear_cache(self):
         try:
             loop = asyncio.get_running_loop()
