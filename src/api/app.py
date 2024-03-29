@@ -418,3 +418,25 @@ async def bulkPathwayUpload(
         print("NOT WORKING")
         print(error)
         return Response(error.__str__(), status_code=500)
+
+
+@app.get('/api/pathways')
+async def get_all_pathways():
+    pathways, error = pathwayv2.get_all_pathways()
+    # Return the data as a JSON response
+    return pathways if not error else Response(content=error, status_code=500)
+
+@app.get('/api/pathways/courses/{pathway}')
+async def get_courses_by_pathway(pathway: str):
+    course, error = pathwayv2.get_courses_by_pathway(pathway)
+    return course if not error else Response(content=error, status_code=500)
+
+@app.get('/api/pathways/courses/{pathway}')
+async def get_compatable_minor_by_pathway(pathway: str):
+    minor, error = pathwayv2.get_compatable_minor_by_pathway(pathway)
+    return minor if not error else Response(content=error, status_code=500)
+
+@app.get('/api/pathways/courses/course_info/{course}')
+async def get_course_info_by_course(course: str):
+    info, error = pathwayv2.get_course_info_by_course(course)
+    return info if not error else Response(content=error, status_code=500)
