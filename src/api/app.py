@@ -431,7 +431,7 @@ async def get_courses_by_pathway(pathway: str):
     course, error = pathwayv2.get_courses_by_pathway(pathway)
     return course if not error else Response(content=error, status_code=500)
 
-@app.get('/api/pathways/courses/{pathway}')
+@app.get('/api/pathways/minor/{pathway}')
 async def get_compatable_minor_by_pathway(pathway: str):
     minor, error = pathwayv2.get_compatable_minor_by_pathway(pathway)
     return minor if not error else Response(content=error, status_code=500)

@@ -163,3 +163,12 @@ export const get_professor_phone_number_by_email = (email) =>
 
 export const get_professor_info_by_email = (email) =>
   client.get("/professor/email/" + email).then((res) => res.data);
+
+export const get_all_pathways = () =>
+  client.get("/user/pathways").then((res) => res.data);
+export const get_courses_by_pathway = () =>
+  client.get("/user/pathways/course").then((res) => res.data);
+export const get_compatable_minor_by_pathway = () =>
+  client.get("/user/pathways/minor").then((res) => res.data);
+export const get_course_info_by_course = () =>
+  client.get("/user/pathways/course/course_info").then((res) => res.data);
