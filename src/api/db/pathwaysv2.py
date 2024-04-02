@@ -118,7 +118,7 @@ class Pathways:
                     """, None, True)
     #gets pathway by catagory
     def get_pathways_by_catagory(self, catagory):
-        if catagory not None:
+        if catagory is not None:
             sql = """
                         SELECT
                             *
@@ -131,7 +131,7 @@ class Pathways:
 
     # gets courses by pathway
     def get_courses_by_pathway(self, pathway):
-        if pathway not None:
+        if pathway is not None:
             sql = """
                 SELECT
                     course
@@ -144,7 +144,7 @@ class Pathways:
 
     #get minor by pathway
     def get_compatable_minor_by_pathway(self, pathway):
-        if pathway not None:
+        if pathway is not None:
             sql = """
                 SELECT 
                     compatible_minor
@@ -156,7 +156,7 @@ class Pathways:
         return self.db_conn.execute(sql, (pathway,), True)
 
     def get_course_info_by_course(self, course):
-        if pathway not None:
+        if pathway is not None:
             sql = """
                 SELECT 
                     course_name, description
