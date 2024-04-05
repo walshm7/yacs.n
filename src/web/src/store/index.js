@@ -5,6 +5,7 @@ import axios from "axios";
 import { getDefaultSemester } from "@/services/AdminService";
 import { getCourses } from "@/services/YacsService";
 import { readableDate, localToUTCDate } from "@/utils";
+import { get_all_categorys } from "@/services/YacsService";
 
 import { userModule, USER_NAMESPACE } from "./modules/user";
 
@@ -17,6 +18,7 @@ Vue.use(Vuex);
 // Constants are UPPER_SNAKE_CASE but we set the values to
 //  camelCase so when using mapMutations, mapActions, etc.
 //  they will map to camelCase names
+export const CATEGORYS = "categorys";
 export const COURSES = "courses";
 export const GET_COURSE_BY_ID = "getCourseById";
 
@@ -48,8 +50,10 @@ const store = new Vuex.Store({
     semesters: [],
     subsemesters: [],
     departments: [],
+    categorys: [],
   },
   getters: {
+    [CATEGORYS]: (state) :  => Object.values(state.categorys),
     [COURSES]: (state) => Object.values(state.coursesById),
     [GET_COURSE_BY_ID]: (state) => (id) => state.coursesById[id],
     darkModeState: (state) => {

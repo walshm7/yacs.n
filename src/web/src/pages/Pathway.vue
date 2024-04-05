@@ -163,6 +163,7 @@
 <script>
 import json from "./pathwayV2.json";
 import CenterSpinnerComponent from "../components/CenterSpinner";
+import { CATEGORYS } from "@/store";
 
 export default {
   name: "Pathway",
@@ -180,7 +181,7 @@ export default {
           text: "Pathways",
         },
       ],
-      categories: json,
+      categories: this.$route.params.category,
       showPath: null,
       cateShow: true,
       alphShow: false,

@@ -166,6 +166,8 @@ export const get_professor_info_by_email = (email) =>
 
 export const get_all_pathways = () =>
   client.get("/user/pathways").then((res) => res.data);
+export const get_all_categorys = () =>
+  client.get("/user/categorys").then((res) => res.data);
 export const get_courses_by_pathway = () =>
   client.get("/user/pathways/course").then((res) => res.data);
 export const get_compatable_minor_by_pathway = () =>
