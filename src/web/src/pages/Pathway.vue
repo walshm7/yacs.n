@@ -356,6 +356,33 @@ export default {
     }
   },
   computed: {
+    categoryCols() {
+      const halfLength = Math.ceil(this.categories.length / 2);
+      const col1 = this.categories.slice(0, halfLength);
+      const col2 = this.categories.slice(halfLength);
+      return [col1, col2];
+    },
+    // Split pathways into alphabetic categories and then into two columns
+    alphabetCols() {
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const cols = [];
+      for (let i = 0; i < alphabet.length; i++) {
+        const letter = alphabet[i];
+        const filteredPathways = this.categories.filter(pathway =>
+          pathway["Name"][0].startsWith(letter)
+        );
+        if (filteredPathways.length > 0) {
+          cols.push({
+            "Category Name": letter,
+            Pathways: filteredPathways
+          });
+        }
+      }
+      const halfLength = Math.ceil(cols.length / 2);
+      const col1 = cols.slice(0, halfLength);
+      const col2 = cols.slice(halfLength);
+      return [col1, col2];
+    },
   },
   methods: {
   },
