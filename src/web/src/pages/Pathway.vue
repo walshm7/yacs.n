@@ -385,6 +385,32 @@ export default {
     },
   },
   methods: {
+    listAlphabet() {
+      this.cateShow = false;
+      this.alphShow = true;
+    },
+    listCate() {
+      this.cateShow = true;
+      this.alphShow = false;
+    },
+    
+    ShowPath(pathway) {
+      this.showPath = pathway;
+      this.$refs["my-modal"].show();
+    },
+
+    goPage(course) {
+      const subject = course.substring(0, 4);
+      const courseID = course.substring(5, 9);
+      if (course[4] === " ") {
+        if (courseID === "XXXX") {
+          this.$router.push(`/explore/${subject}`);
+        } else {
+          this.$router.push(`/explore/${subject}/${subject}-${courseID}`);
+        }
+      }
+    },
+  },
   },
 };
 </script>
