@@ -165,6 +165,7 @@ import json from "./pathwayV2.json";
 import CenterSpinnerComponent from "../components/CenterSpinner";
 import { CATEGORYS } from "@/store";
 
+/*
 export default {
   name: "Pathway",
   components: {
@@ -314,7 +315,52 @@ export default {
       }
     },
   },
+}; */
+import CenterSpinnerComponent from "../components/CenterSpinner";
+import { CATEGORYS } from "@/store";
+
+export default {
+  name: "Pathway",
+  components: {
+    CenterSpinner: CenterSpinnerComponent,
+  },
+  data() {
+    return {
+      breadcrumbNav: [
+        {
+          text: "YACS",
+          to: "/",
+        },
+        {
+          text: "Pathways",
+        },
+      ],
+      categories: [],
+      showPath: null,
+      cateShow: true,
+      alphShow: false,
+      loading: true, // Indicates whether data is loading
+    };
+  },
+  async mounted() {
+    try {
+      // Make an API call to fetch data from the pathways database
+      const response = await fetch('https://your-api-endpoint.com/pathways');
+      const data = await response.json();
+      // Assuming the response data structure is similar to the one you imported
+      this.categories = data.pathways;
+      this.loading = false; // Data loading complete
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error, show error message to the user, etc.
+    }
+  },
+  computed: {
+  },
+  methods: {
+  },
 };
+</script>
 </script>
 
 <style>

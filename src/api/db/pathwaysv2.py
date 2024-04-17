@@ -41,6 +41,7 @@ class Pathways:
                                     if len(cor.split('-')) > 1:
                                         cor2 = cor.split('-')[1]
                                         cor1 = cor.split('-')[0]
+
                                     elif len(cor.split('–')) > 1:
                                         cor2 = cor.split('–')[1]
                                         cor1 = cor.split('–')[0]

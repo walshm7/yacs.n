@@ -53,7 +53,7 @@ const store = new Vuex.Store({
     categorys: [],
   },
   getters: {
-    [CATEGORYS]: (state) :  => Object.values(state.categorys),
+    [CATEGORYS]: (state)  => Object.values(state.categorys),
     [COURSES]: (state) => Object.values(state.coursesById),
     [GET_COURSE_BY_ID]: (state) => (id) => state.coursesById[id],
     darkModeState: (state) => {
